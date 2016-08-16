@@ -1101,12 +1101,28 @@
 		</xsd:attribute>
 	</xsd:complexType>
 	
+	<xsd:complexType name="openType">
+		<xsd:attribute name="exportServices" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ 发布到open-api系统的service列表，以 , 分割。不能与 ignoreServices 同时使用 ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="ignoreServices" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ 不发布到open-api系统的service列表，以 , 分割。不能与 exportServices 同时使用 ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="openApiType">
+	</xsd:complexType>
+	
 	<xsd:element name="annotation" type="annotationType">
 		<xsd:annotation> 
 			<xsd:documentation><![CDATA[ The annotation config ]]></xsd:documentation> 
 		</xsd:annotation>
 	</xsd:element>
-	
+		
 	<xsd:element name="application" type="applicationType">
 		<xsd:annotation> 
 			<xsd:documentation><![CDATA[ The application config ]]></xsd:documentation> 
@@ -1176,6 +1192,18 @@
 	<xsd:element name="parameter" type="parameterType">
 		<xsd:annotation> 
 			<xsd:documentation><![CDATA[ The service url parameter ]]></xsd:documentation> 
+		</xsd:annotation>
+	</xsd:element>
+	
+	<xsd:element name="open" type="openType">
+		<xsd:annotation> 
+			<xsd:documentation><![CDATA[ The open-api config ]]></xsd:documentation> 
+		</xsd:annotation>
+	</xsd:element>
+	
+    <xsd:element name="open-api" type="openApiType">
+		<xsd:annotation> 
+			<xsd:documentation><![CDATA[ The open-api config ]]></xsd:documentation> 
 		</xsd:annotation>
 	</xsd:element>
 	

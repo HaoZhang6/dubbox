@@ -282,5 +282,37 @@ public class ZookeeperRegistry extends FailbackRegistry {
         }
         return address;
     }
+    
+    public void setData(String data){
+        try {
+        	zkClient.create(data,true);
+        } catch (Throwable e) {
+            throw new RpcException("Failed to set data " + data + " to zookeeper " + getUrl() + ", cause: " + e.getMessage(), e);
+        }
+    }
+    
+   public  List<String> getData(String data){
+        if (data == null) {
+            throw new IllegalArgumentException("getData == null");
+        }
+        try {
+            List<String> datas = new ArrayList<String>();
+            List<String> children = zkClient.getChildren(data);
+            if (children != null) {
+                datas.addAll(children);
+            }
+            return datas;
+        } catch (Throwable e) {
+            throw new RpcException("Failed to getData " + data + " from zookeeper " + getUrl() + ", cause: " + e.getMessage(), e);
+        }
+    }
+   
+   public  void addPathChildlistener(String path,ChildListener childListener){
+       try {
+           zkClient.addChildListener(path, childListener);
+       } catch (Throwable e) {
+           throw new RpcException("Failed to addPathChildlistener " + path + " from zookeeper " + getUrl() + ", cause: " + e.getMessage(), e);
+       }
+   }
 
 }

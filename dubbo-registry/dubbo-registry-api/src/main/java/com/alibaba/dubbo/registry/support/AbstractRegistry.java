@@ -47,6 +47,7 @@ import com.alibaba.dubbo.common.utils.NamedThreadFactory;
 import com.alibaba.dubbo.common.utils.UrlUtils;
 import com.alibaba.dubbo.registry.NotifyListener;
 import com.alibaba.dubbo.registry.Registry;
+import com.alibaba.dubbo.rpc.RpcContext;
 
 /**
  * AbstractRegistry. (SPI, Prototype, ThreadSafe)
