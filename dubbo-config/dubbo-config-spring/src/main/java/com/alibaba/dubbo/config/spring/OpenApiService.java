@@ -23,9 +23,10 @@ public class OpenApiService {
 		reference.setProtocol(protocolConfig.getName());
 		reference.setInterface(ProxyService.class.getName());
 		reference.setGroup(openSystem.getGroup());
-		ProxyService wmsProxyService=reference.get();
+		reference.setVersion(openSystem.getVersion());
+		ProxyService proxyService=reference.get();
 		
-		ProxyServiceFactory.putProviderService(applicationConfig.getName(),wmsProxyService);
+		ProxyServiceFactory.putProviderService(applicationConfig.getName(),openSystem.getGroup(),openSystem.getVersion(),proxyService);
 	}
 
 }

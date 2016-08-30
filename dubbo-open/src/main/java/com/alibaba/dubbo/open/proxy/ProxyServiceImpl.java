@@ -1,8 +1,7 @@
 package com.alibaba.dubbo.open.proxy;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import com.alibaba.dubbo.open.constant.Constant;
 import com.alibaba.dubbo.open.exception.OpenException;
@@ -12,9 +11,6 @@ import com.alibaba.dubbo.open.util.JsonUtil;
   
 public class ProxyServiceImpl implements ProxyService {
 	
-	/* (non-Javadoc)
-	 * @see com.alibaba.dubbo.open.ProxyService#invoke(java.lang.String, java.lang.String, java.lang.String)
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public String  invoke(String providerName,String providerMethod,String params)throws OpenException{
@@ -24,20 +20,16 @@ public class ProxyServiceImpl implements ProxyService {
 		}
 		try {
 			Method method=provider.getMethod(providerMethod);
-			HashMap<String,Object> paramsMap=new HashMap<String, Object>();
+			LinkedHashMap<String,Object> paramsMap=new LinkedHashMap<String, Object>();
 			paramsMap=JsonUtil.toObject(params, paramsMap.getClass());
-			Object  result=method.invoke(provider.getService(),paramsMap.values().toArray());
+			Object[] invokeParams=paramsMap.values().toArray();
+			Object service=provider.getService();
+			Object  result=method.invoke(service,invokeParams);
 			return JsonUtil.toJson(result);
-		} catch (SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			throw new OpenException(Constant.serverErrorCode,Constant.serverErrorInfo);
 		}
-		return null;
 	}
 
 }

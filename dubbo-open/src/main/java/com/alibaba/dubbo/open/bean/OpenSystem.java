@@ -18,6 +18,8 @@ public class OpenSystem implements Serializable{
 	private String registryAddress;
 	
 	private String registryProtocol;
+	
+	private String version;
 
 	public String getApplicationName() {
 		return applicationName;
@@ -49,6 +51,14 @@ public class OpenSystem implements Serializable{
 
 	public String getRegistryProtocol() {
 		return registryProtocol;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 	public void setRegistryAddress(String registryAddress) {

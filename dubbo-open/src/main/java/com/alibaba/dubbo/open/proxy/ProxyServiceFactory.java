@@ -14,11 +14,13 @@ public class ProxyServiceFactory{
 	
 	private static Map<String,ProxyService> proxyServices=new HashMap<String, ProxyService>();
 	
-	public static ProxyService  getProxyService(String systemName){
-		return proxyServices.get(systemName);
+	public static ProxyService  getProxyService(String systemName,String group,String version){
+		String key=systemName+group+version;
+		return proxyServices.get(key);
 	}
 	
-	public static void putProviderService(String key,ProxyService object){
+	public static void putProviderService(String systemName,String group,String version,ProxyService object){
+		String key=systemName+group+version;
 		proxyServices.put(key, object);
 	}
 

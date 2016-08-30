@@ -725,4 +725,15 @@
 			<timezone>+8</timezone>
 		</developer>
 	</developers>
+	
+  <distributionManagement>
+    <repository>
+	    <id>dal-releases</id>
+	    <url>http://10.100.200.4:8081/nexus/content/repositories/dal-releases</url>  
+    </repository>
+    <snapshotRepository>
+	    <id>dal</id>
+	    <url>http://10.100.200.4:8081/nexus/content/repositories/dal</url>  
+    </snapshotRepository>
+  </distributionManagement>
 </project>

@@ -8,8 +8,8 @@ import com.alibaba.dubbo.open.proxy.ProxyServiceFactory;
 public class RoteService {
 	
 	public String invoke(String systemName,String providerName, String providerMethod,
-			String params)throws OpenException{
-		ProxyService proxyService=ProxyServiceFactory.getProxyService(systemName);
+			String group,String version,String params)throws OpenException{
+		ProxyService proxyService=ProxyServiceFactory.getProxyService(systemName,group,version);
 		if(proxyService==null){
 			throw new OpenException(Constant.systemNotFondCode, Constant.systemNotFondInfo);
 		}

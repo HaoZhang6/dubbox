@@ -15,6 +15,7 @@ import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.OpenConfig;
 import com.alibaba.dubbo.config.ProtocolConfig;
+import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.ServiceConfig;
 import com.alibaba.dubbo.open.bean.OpenSystem;
@@ -44,11 +45,12 @@ public class OpenBean extends OpenConfig implements InitializingBean,Application
 	@Override  
 	public void afterPropertiesSet() throws Exception {
 		
+		Map<String, ServiceConfig> serviceConfigMap = applicationContext == null ? null  : BeanFactoryUtils.beansOfTypeIncludingAncestors(applicationContext, ServiceConfig.class, false, false);
 		
-		Map<String, ServiceConfig> providerConfigMap = applicationContext == null ? null  : BeanFactoryUtils.beansOfTypeIncludingAncestors(applicationContext, ServiceConfig.class, false, false);
+		Collection<ServiceConfig> serviceConfigs=serviceConfigMap.values();
 		
-		Collection<ServiceConfig> serviceConfigs=providerConfigMap.values();
 		
+		ProviderConfig providerConfig=applicationContext.getBean(ProviderConfig.class);
 		ProtocolConfig protocolConfig=null;
 		ApplicationConfig applicationConfig=null;
 		RegistryConfig registryConfig=null;
@@ -94,7 +96,8 @@ public class OpenBean extends OpenConfig implements InitializingBean,Application
         service.setProtocol(protocolConfig);
         service.setInterface(ProxyService.class.getName());
         service.setRef(new ProxyServiceImpl());
-        service.setGroup(registryConfig.getGroup());
+        service.setGroup(providerConfig.getGroup());
+        service.setVersion(providerConfig.getVersion());
         service.export();
 		
         String openPath="/dubbo/open";
@@ -102,9 +105,10 @@ public class OpenBean extends OpenConfig implements InitializingBean,Application
 		OpenSystem openSystem=new OpenSystem();
 		openSystem.setApplicationName(applicationConfig.getName());
 		openSystem.setProtocolName(protocolConfig.getName());
-		openSystem.setGroup(registryConfig.getGroup());
+		openSystem.setGroup(providerConfig.getGroup());
 		openSystem.setRegistryProtocol(registryConfig.getProtocol());
 		openSystem.setRegistryAddress(registryConfig.getAddress());
+		openSystem.setVersion(providerConfig.getVersion());
 
 		String fullPath=openSystemsPath+JsonUtil.toJson(openSystem);
 		
