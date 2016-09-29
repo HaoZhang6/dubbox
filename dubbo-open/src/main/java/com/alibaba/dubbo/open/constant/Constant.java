@@ -10,8 +10,8 @@ public class Constant {
     
     public static String systemNotFondInfo="未找到相应系统！";
     
-    public static String serverErrorCode="400";
+    public static String serverErrorCode="500";
     
-    public static String serverErrorInfo="未找到相应系统！";
+    public static String serverErrorInfo="业务系统异常！";
 
 }
