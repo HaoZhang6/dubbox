@@ -20,7 +20,13 @@ public class ProxyServiceFactory{
 	}
 	
 	public static void putProviderService(String systemName,String group,String version,ProxyService object){
-		String key=systemName+group+version;
+		String key=systemName;
+		if(group!=null){
+			key+=group;
+		}
+		if(version!=null){
+			key+=version;
+		}
 		proxyServices.put(key, object);
 	}
 
